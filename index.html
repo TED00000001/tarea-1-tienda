@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tarea 1 - Tarjeta de producto accesible | tarea-1-tienda</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #F5F5F5; color: #1F1F1F; margin: 0; padding: 20px; }
+    .comparar { display: flex; flex-wrap: wrap; gap: 20px; }
+    .tarjeta { background: white; border-radius: 10px; padding: 16px; width: 320px; }
+    .mal { border-top: 8px solid #B3261E; }
+    .bien { border-top: 8px solid #2E7D32; }
+    img { width: 100%; border-radius: 8px; }
+    .mensaje { font-weight: bold; color: #2E7D32; min-height: 22px; }
+    .mal .precio { color: #BBBBBB; font-size: 22px; }
+    .mal .punto { display: inline-block; width: 14px; height: 14px; border-radius: 50%; background: #2E7D32; }
+    .mal .corazon { font-size: 14px; cursor: pointer; }
+    .mal .comprar { display: inline-block; background: #0F4C81; color: #FFFFFF; padding: 12px 20px; border-radius: 6px; cursor: pointer; }
+    .mal *:focus { outline: none; }
+    .bien .precio { color: #1F1F1F; font-size: 22px; font-weight: bold; }
+    .bien .estado { color: #2E7D32; font-weight: bold; }
+    .bien .corazon { width: 48px; height: 48px; font-size: 24px; background: #FFFFFF; border: 2px solid #767676; border-radius: 8px; cursor: pointer; }
+    .bien .corazon[aria-pressed="true"] { background: #FDE7E7; border-color: #B3261E; }
+    .bien .comprar { font-size: 18px; background: #0F4C81; color: #FFFFFF; border: 0; padding: 12px 20px; border-radius: 6px; cursor: pointer; }
+    .bien button:focus-visible { outline: 4px solid #F4B400; outline-offset: 3px; }
+  </style>
+</head>
+<body>
+  <p><small>Carpeta: tarea-1-tienda</small></p>
+  <h1>Tarea 1: tarjeta de producto</h1>
+  <p>Compara las cinco barreras de la tarjeta Antes con la tarjeta Después corregida.</p>
+  <div class="comparar">
+    <div class="tarjeta mal">
+      <h2>Antes</h2>
+      <img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/6/60/Blue_an_orange_Asics_running_shoes.jpg/960px-Blue_an_orange_Asics_running_shoes.jpg">
+      <h3>Zapatillas Trail</h3>
+      <p class="precio">S/ 289.00</p>
+      <p><span class="punto"></span></p>
+      <span class="corazon" id="favorito-mal">♡</span>
+      <div class="comprar" id="comprar-mal">Comprar</div>
+      <p class="mensaje" id="msg-mal"></p>
+    </div>
+    <div class="tarjeta bien">
+      <h2>Después</h2>
+      <img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/6/60/Blue_an_orange_Asics_running_shoes.jpg/960px-Blue_an_orange_Asics_running_shoes.jpg" alt="Zapatillas de correr azules y naranjas marca Asics">
+      <h3>Zapatillas Trail</h3>
+      <p class="precio">S/ 289.00</p>
+      <p class="estado">Disponible</p>
+      <button class="corazon" id="favorito" aria-label="Agregar a favoritos" aria-pressed="false">♡</button>
+      <button class="comprar" id="comprar-bien">Comprar</button>
+      <p class="mensaje" id="msg-bien" role="status"></p>
+    </div>
+  </div>
+  <p><small>Foto: <a href="https://commons.wikimedia.org/wiki/File:Blue_an_orange_Asics_running_shoes.jpg">Philur, Wikimedia Commons</a>, licencia <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>.</small></p>
+  <p>En Antes el precio casi no se lee, el punto no explica la disponibilidad y el corazón y Comprar no reciben el foco del teclado. En Después, pulsa Tab, el corazón y Comprar.</p>
+  <script>
+    function comprar(idMensaje) {
+      document.getElementById(idMensaje).textContent = 'Agregado a tu carrito.';
+    }
+    document.getElementById('comprar-mal').addEventListener('click', function () {
+      comprar('msg-mal');
+    });
+    document.getElementById('comprar-bien').addEventListener('click', function () {
+      comprar('msg-bien');
+    });
+    var favorito = document.getElementById('favorito');
+    favorito.addEventListener('click', function () {
+      var activo = favorito.getAttribute('aria-pressed') === 'true';
+      if (activo) {
+        favorito.setAttribute('aria-pressed', 'false');
+        favorito.setAttribute('aria-label', 'Agregar a favoritos');
+        favorito.textContent = '♡';
+      } else {
+        favorito.setAttribute('aria-pressed', 'true');
+        favorito.setAttribute('aria-label', 'Quitar de favoritos');
+        favorito.textContent = '♥';
+      }
+    });
+  </script>
+</body>
+</html>
